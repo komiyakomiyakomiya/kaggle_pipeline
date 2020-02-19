@@ -25,8 +25,8 @@ class Valid(object):
         preds_list_test = []
         index_list_valid = []
 
-        kf = StratifiedKFold(n_splits=4, shuffle=True, random_state=71)
-        for i, (tr_idx, va_idx) in enumerate(kf.split(train_x, train_y), 1):
+        skf = StratifiedKFold(n_splits=4, shuffle=True, random_state=71)
+        for i, (tr_idx, va_idx) in enumerate(skf.split(train_x, train_y), 1):
             print('fold{} start'.format(i))
             tr_x = train_x.iloc[tr_idx]
             tr_y = train_y.iloc[tr_idx]
