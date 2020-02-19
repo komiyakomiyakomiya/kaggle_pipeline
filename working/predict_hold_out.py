@@ -30,7 +30,7 @@ valid = Valid()
 # LightGBM
 print('######### LGBM #########')
 lgbm_wrap = LGBMWrapper()
-pred_train_lgbm, pred_test_lgbm = valid.stratified_kf(
+pred_train_lgbm, pred_test_lgbm = valid.hold_out(
     lgbm_wrap, train_x, train_y, test_x)
 
 pred_binary_train_lgbm = np.where(pred_train_lgbm > 0.5, 1, 0)
@@ -46,7 +46,7 @@ print(f'acc_test LGBM: {acc_test_lgbm}')
 # XGBoost
 print('######### XGB #########')
 xgb_wrap = XGBWrapper()
-pred_train_xgb, pred_test_xgb = valid.stratified_kf(
+pred_train_xgb, pred_test_xgb = valid.hold_out(
     xgb_wrap, train_x, train_y, test_x)
 
 pred_binary_train_xgb = np.where(pred_train_xgb > 0.5, 1, 0)
@@ -61,7 +61,7 @@ print(f'acc_test XGB: {acc_test_xgb}')
 # CatBoost
 print('######### Cat #########')
 cat_wrap = CatWrapper()
-pred_train_cat, pred_test_cat = valid.stratified_kf(
+pred_train_cat, pred_test_cat = valid.hold_out(
     cat_wrap, train_x, train_y, test_x)
 
 pred_binary_train_cat = np.where(pred_train_cat > 0.5, 1, 0)
@@ -77,7 +77,7 @@ print(f'acc_test Cat: {acc_test_cat}')
 # NeuralNetwork
 print('######### NN #########')
 nn_wrap = NNWrapper()
-pred_train_nn, pred_test_nn = valid.stratified_kf(
+pred_train_nn, pred_test_nn = valid.hold_out(
     nn_wrap, train_x, train_y, test_x)
 
 pred_binary_train_nn = np.where(pred_train_nn > 0.5, 1, 0)
@@ -106,7 +106,7 @@ test_x2 = pd.DataFrame({'pred_lgbm': pred_test_lgbm,
 # LogisticRegrssor
 print('######### LR #########')
 lr_wrap = LogisticRegrWrapper()
-pred_train_lr, pred_test_lr = valid.stratified_kf(
+pred_train_lr, pred_test_lr = valid.hold_out(
     lr_wrap, train_x2, train_y, test_x2)
 
 pred_binary_train_lr = np.where(pred_train_lr > 0.5, 1, 0)
@@ -117,5 +117,8 @@ acc_test_lr = round(accuracy_score(test_y, pred_binary_test_lr)*100, 2)
 
 print(f'acc_train LR: {acc_train_lr}')
 print(f'acc_test LR: {acc_test_lr}')
+
+# %%
+
 
 # %%

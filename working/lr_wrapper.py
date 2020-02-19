@@ -1,12 +1,9 @@
 # %%
-import numpy as np
+import pickle
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-# from sklearn.metrics import accuracy_score
 # from sklearn.pipeline import Pipeline
-
-# from working.data import Data
-# from working.cv import CV
 
 
 class LogisticRegrWrapper(object):
@@ -32,35 +29,21 @@ class LogisticRegrWrapper(object):
         # ])
         # self.pipeline.fit(tr_x, tr_y)
 
+    def save(self):
+        pass
+        # model_dir_path = '../output/'
+        # file_name = 'model_lr.pkl'
+        # with open(model_dir_path + file_name, 'wb') as f:
+        #     pickle.dump(self.model, f)
+
     def predict(self, x):
         x = x.fillna(x.mean())
 
         """ not use pipeline """
         x = self.scaler.transform(x)
-        pred = self.model.predict_proba(x)[:, 1]
+        pred_proba = self.model.predict_proba(x)[:, 1]
 
         """ use pipeline """
         # pred = self.pipeline.predict(x)
 
-        return pred
-
-
-# %%
-if __name__ == '__main__':
-    cv = CV()
-    data = Data()
-    lr_rgrs_wrapper = LogisticRegrWrapper()
-
-    X_train, y_train, test, submission_temp = data.processing()
-
-    level2_tr_pred_lr_rgrs, level2_tr_test_lr_rgrs = cv.predict_cv(
-        lr_rgrs_wrapper, X_train, y_train, test)
-
-    print(
-        f'accuracy_score logistic_regression: {round(accuracy_score(y_train, level2_tr_pred_lr_rgrs)*100, 2)}')
-
-    submission_temp['Survived'] = level2_tr_test_lr_rgrs
-    submission_temp.to_csv('4fold_lr.csv', index=False)
-
-
-# %%
+        return pred_proba

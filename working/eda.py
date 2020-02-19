@@ -289,10 +289,10 @@ display('#'*20)
 display(test)
 
 # %%
-# X_trainをSurvivedカラム（正解データ）以外とする
-X_train = train.drop(['Survived'], axis=1)
-# y_trainをSurvivedカラム（正解データ）とする
-y_train = train['Survived']
+# train_xをSurvivedカラム（正解データ）以外とする
+train_x = train.drop(['Survived'], axis=1)
+# train_yをSurvivedカラム（正解データ）とする
+train_y = train['Survived']
 
 
 # %%
