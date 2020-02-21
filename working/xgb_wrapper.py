@@ -46,7 +46,7 @@ class XGBWrapper(object):
         # 降順にソート
         df_importance = df_importance.sort_values(
             'importance', ascending=False)
-        display(df_importance)
+        print(df_importance)
 
         # [print(i) for i in sorted(feature_importance.items(), key=lambda x:)]
     def save(self):
