@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 
-cwd = os.path.dirname(os.path.abspath(__file__))2yy
+cwd = os.path.dirname(os.path.abspath(__file__))
 print(cwd)
 
 # if '/Users/' in __file__:
