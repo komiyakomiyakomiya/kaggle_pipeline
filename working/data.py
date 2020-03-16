@@ -11,6 +11,8 @@ import pandas as pd
 cwd = os.path.dirname(os.path.abspath(__file__))
 print(cwd)
 
+key_path = '{}/../credentials.json'.format(cwd)
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = key_path
 # if '/Users/' in __file__:
 # from dotenv import load_dotenv
 # load_dotenv('{}/../.env'.format(cwd))

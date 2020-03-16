@@ -42,6 +42,7 @@ googletrans = "*"
 google-cloud-storage = "*"
 python-dotenv = "*"
 optuna = "*"
+google-cloud-bigquery = "*"
 
 [requires]
 python_version = "3.7.6"
