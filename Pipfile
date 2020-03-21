@@ -43,6 +43,8 @@ google-cloud-storage = "*"
 python-dotenv = "*"
 optuna = "*"
 google-cloud-bigquery = "*"
+pytest = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7.6"

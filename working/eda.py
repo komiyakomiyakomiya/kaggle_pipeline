@@ -1,10 +1,7 @@
 # %%
-# !pip install autopep8 japanize-matplotlib kaggle python-language-server pyls
-
-# %%
-from sklearn.metrics import accuracy_score
+import pdb
+import os
 from sklearn.model_selection import train_test_split
-# import lightgbm as lgb
 from IPython.display import display
 import japanize_matplotlib
 import matplotlib as mpl

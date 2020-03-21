@@ -1,37 +1,22 @@
-# %%
-import os
-import pickle
-
-from google.cloud import bigquery
-from IPython.display import display
+#%%
+import numpy as np
 import pandas as pd
 
 
-# 自ファイルのディレクトリを取得
-cwd = os.path.dirname(os.path.abspath(__file__))
-# 環境変数に設定
-key_path = f'{cwd}/./credentials.json'
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = key_path
+df0 = pd.DataFrame(data=np.zeros([3, 3]) ,columns=['A', 'B', 'C'])
+df1 = pd.DataFrame(data=np.ones([3, 3]) ,columns=['A', 'B', 'C'])
+df_concat = pd.concat([df0, df1])
+l = [df0, df1, df_concat]
 
-project_id = 'kaggle-titanic-bq'
-dataset = 'dlg'
+display(df0)
+display(df1)
+display(df_concat)
+# %%
+df_all = pd.DataFrame(None)
+for df in l:
+    df_all = pd.concat([df_all, df])
 
-client = bigquery.Client(project=project_id)
-tables_obj = client.list_tables(dataset=dataset)
-tables = [table.table_id for table in tables_obj]
-print(tables)
-
-
-df_dict = {}
-for table in tables:
-    sql = f"""
-    select *
-    from {dataset}.{table}
-    """
-
-    df = client.query(sql).to_dataframe()
-    df_dict[table] = df
-    display(df_dict[table])
+df_all
 
 
 # %%

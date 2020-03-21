@@ -1,4 +1,5 @@
 # %%
+import pdb
 import pickle
 
 import lightgbm as lgb
@@ -16,10 +17,23 @@ class LGBMWrapper(object):
         params = {'objective': 'binary',
                   'seed': 71,
                   'verbose': 0}
+
+        # params  = {
+        #     'objective': 'regression',
+        #     'learning_rate': 0.1, # 学習率
+        #     'max_depth': -1, # 木の数 (負の値で無制限)
+        #     'num_leaves': 9, # 枝葉の数
+        #     'metric': ('mean_absolute_error', 'mean_squared_error', 'rmse'),
+        #     'drop_rate': 0.15,
+        #     'verbose': 0
+        # }
+        # メトリック https://lightgbm.readthedocs.io/en/latest/Parameters.html#metric-parameters
+
         self.model = lgb.train(params=params,
                                train_set=lgb_train,
                                valid_sets=[lgb_train, lgb_valid],
-                               early_stopping_rounds=10,
+                               num_boost_round=10000,
+                               early_stopping_rounds=10,  # 検証スコアが10ラウンド改善しないまでトレーニング
                                verbose_eval=-1)
 
         # importanceを表示する
@@ -37,31 +51,4 @@ class LGBMWrapper(object):
 
     def predict(self, x):
         pred_proba = self.model.predict(x)
-        # pred_class = (pred > 0.5).astype(int)
         return pred_proba
-
-
-if __name__ == '__main__':
-    import numpy as np
-    from sklearn.metrics import accuracy_score
-
-    from data import Data
-    from cv import CV
-
-    data = Data()
-    cv = CV()
-    lgbm_wrap = LGBMWrapper()
-
-    X_train, y_train, X_test, y_test = data.processing()
-
-    tr_pred_proba, test_pred_proba = cv.predict_cv(
-        lgbm_wrap, X_train, y_train, X_test)
-
-    tr_pred_binary = np.where(tr_pred_proba > 0.5, 1, 0)
-    test_pred_binary = np.where(test_pred_proba > 0.5, 1, 0)
-
-    print(accuracy_score(y_train, tr_pred_binary)*100, 2)
-    print(accuracy_score(y_test, test_pred_binary)*100, 2)
-
-
-# %%
